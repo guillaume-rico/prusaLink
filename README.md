@@ -19,6 +19,9 @@ Example of use :
     # Display bed temperature
     print(getPrint.json()["telemetry"]["temp-bed"])
     
+    # Delete all files on USB drive (rootdir) :
+    prusaMini.rm()
+    
     # Transferring a file to the printer
     prusaMini.post_gcode('C:/AM/test.gcode')
     
@@ -43,14 +46,27 @@ prusaLink officially supports Python 3.9+.
 ## Low Level Functions
 
 get_version()
+
 get_printer()
+
 get_job()
+
 get_files(remoteDir)
+
 delete_gcode(remotePath)
+
 post_gcode(path)
+
 post_print_gcode(remotePath)
 
+
 ## High Level Functions 
+
+rm(remotePath) 
+
+rm is used to delete all files in a folder :
+
+    prusaMini.rm()
 
 Function to add to the library:
 
@@ -266,10 +282,17 @@ https://github.com/prusa3d/Prusa-Firmware-Buddy/blob/master/lib/WUI/link_content
 
 
 # Construire la lib
-py -m build
 
-T upload to testpi repo :
-py -m twine upload --repository testpi dist/*
+    py -m build
+
+To upload to testpi repo :
+
+    py -m twine upload --repository testpi dist/*
+
+To upload to pypi repo :
+
+    py -m twine upload dist/*
+
 
 https://medium.com/analytics-vidhya/how-to-create-a-python-library-7d5aea80cc3f
 

@@ -30,7 +30,7 @@ class prusaLink:
         r = requests.get('http://' + self.host + ':' + self.port + '/api/job', headers=self.headers)
         return r
         
-    def get_files(self, remoteDir = '/USB/') :
+    def get_files(self, remoteDir = '/') :
         """
         List files on USB Drive.
         
@@ -90,6 +90,25 @@ class prusaLink:
         """
         r = requests.delete('http://' + self.host + ':' + self.port + '/api/files' + filePathRemote, headers=self.headers)
         return r
+        
+    def rm(self, filePathRemote = '/') :
+        """
+            Delete all files in a directory
+            
+            import requests
+            headers = {'X-Api-Key': "U7N37h7WdTrYicA"}
+            r = requests.get('http://192.168.0.123:8015/api/files/', headers=self.headers)
+            
+        """
+        ret = self.get_files(remoteDir = filePathRemote)
+        
+        # Check if response is json 
+        if "{" in ret.text :
+            for filejson in ret.json()['files'][0]['children'] :
+                print("Delete file : " + filejson["path"])
+                self.delete_gcode( filejson["path"])
+        else :
+            return ret
         
         
 # Utilisation :
